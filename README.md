@@ -1,5 +1,6 @@
 <a name="readme-top"></a>
 # Cell Checker
+![Alt text](./cell-checker.png?raw=true "Title")
 
 An open-source data validation framework designed to ensure the integrity and accuracy of your datasets. Built using Python, Cell Checker empowers data professionals and developers to efficiently validate data across various sources, ensuring compliance with predefined rules and standards.
 
