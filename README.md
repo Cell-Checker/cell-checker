@@ -64,7 +64,7 @@ By working together, we aim to create a robust framework that not only enhances 
 
 ## Usage
 
-1. Create a test file called test.yaml. See [csv_2_csv.yaml](data_validation_tests/csv_2_csv.yaml) for format.
+1. Create a test file called test.yaml. See [csv_2_csv_example.yaml](data_validation_tests/csv_2_csv_example.yaml) for format.
 2. Execute the test, ```python main.py --config test.yaml```
 3. Review the results (Coming Soon)
 
