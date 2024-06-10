@@ -128,6 +128,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Melvin Laguren - [@mlaguren](https://twitter.com/mlaguren) - melvin@laguren.net
 
-Project Link: [https://github.com/cell_checker/cell_checker](https://github.com/cell_checker/cell_checker)
+Project Link: [https://github.com/Cell-Checker/cell-checker](https://github.com/Cell-Checker/cell-checker)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
