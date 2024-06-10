@@ -7,7 +7,11 @@ from typing_extensions import Annotated
 
 def main(config: Annotated[Path, typer.Option(help="Path to test config file")]):
     """
-    Main function to check if a YAML test file contains the required keys and process the data.
+    Main function to
+    1. Check if a YAML test file contains the required keys.
+    2. Extract the source and target data and load into a dataframe
+    3. Compare the two dataframes based on rules ( To Do )
+    4. Generate a report ( To Do )
 
     Parameters:
     config (Path): Path to the test YAML file.
