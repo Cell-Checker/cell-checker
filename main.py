@@ -4,6 +4,8 @@ from libs.check_keys import *
 from libs.process_data import *
 from pathlib import Path
 from typing_extensions import Annotated
+from libs.comparison_rules import *
+
 
 def main(config: Annotated[Path, typer.Option(help="Path to test config file")]):
     """
@@ -28,8 +30,14 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         if result:
             # Process the data if the required keys are present
             source_df, target_df = process_data(test_case)
-            print(source_df)
-            print(target_df)
+
+            source_data = source_df.to_dict(orient='records')
+            target_data = target_df.to_dict(orient='records')
+
+            # Posting the event to the ruleset
+            for comparison_rule in test_case['test']['comparison_rules']:
+                post('comparison_rules', dict(rule=comparison_rule, source=source_data, target=target_data))
+
         else:
             # Print an error message if the required keys are missing
             print(f"Test Case Is Missing The Following Information: {missing_keys}")
