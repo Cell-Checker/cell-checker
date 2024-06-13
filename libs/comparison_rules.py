@@ -22,3 +22,12 @@ with ruleset('comparison_rules'):
         else:
             print(f"Rows do not match between both source and target")
             return False
+    @when_all(m.rule == 'not_null')
+    def not_null(c):
+        target = pd.DataFrame(c.m.terget)
+        if target.notnull:
+            print(f"No Nulls")
+            return True
+        else:
+            print(f"Empty Values")
+            return False
