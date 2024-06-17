@@ -53,3 +53,64 @@ def test_unequal_row_count():
 
     # Assert that the result is set correctly in the state
     assert state.get('result') == False
+
+def test_matched_rows():
+    session_id = 'test_matched_rows'
+    source = [{'id': 1, 'key': 'ecoatm-mobile-ios', 'name': 'ECOATM APP - IOS'}]
+    target = [{'id': 1, 'key': 'ecoatm-mobile-ios', 'name': 'ECOATM APP - IOS'}]
+    dfs = dict(rule='rows_match', source=source, target=target, sid=session_id)
+
+    # Post the fact to the ruleset
+    post('comparison_rules', dfs)
+
+    # Retrieve the updated state from the ruleset
+    state = get_host().get_state('comparison_rules', session_id)
+
+    # Assert that the result is set correctly in the state
+    assert state.get('result') == True
+
+def test_unmatched_rows():
+    session_id = 'test_matched_rows'
+    source = [{'id': 1, 'key': 'ecoatm-mobile', 'name': 'ECOATM APP - IOS'}]
+    target = [{'id': 1, 'key': 'ecoatm-mobile-ios', 'name': 'ECOATM APP - IOS'}]
+    dfs = dict(rule='rows_match', source=source, target=target, sid=session_id)
+
+    # Post the fact to the ruleset
+    post('comparison_rules', dfs)
+
+    # Retrieve the updated state from the ruleset
+    state = get_host().get_state('comparison_rules', session_id)
+
+    # Assert that the result is set correctly in the state
+    assert state.get('result') == False
+
+
+def test_is_not_null():
+    session_id = 'test_is_not_null'
+    source = [{'id': 1, 'key': 'ecoatm-mobile', 'name': 'ECOATM APP - IOS'}]
+    target = [{'id': 1, 'key': 'ecoatm-mobile-ios', 'name': 'ECOATM APP - IOS'}]
+    dfs = dict(rule='not_null', source=source, target=target, sid=session_id)
+
+    # Post the fact to the ruleset
+    post('comparison_rules', dfs)
+
+    # Retrieve the updated state from the ruleset
+    state = get_host().get_state('comparison_rules', session_id)
+
+    # Assert that the result is set correctly in the state
+    assert state.get('result') == True
+
+def test_is_null():
+    session_id = 'test_is_not_null'
+    source = [{'id': 1, 'key': 'ecoatm-mobile', 'name': 'ECOATM APP - IOS'}]
+    target = [{'id': 1, 'key': None, 'name': 'ECOATM APP - IOS'}]
+    dfs = dict(rule='not_null', source=source, target=target, sid=session_id)
+
+    # Post the fact to the ruleset
+    post('comparison_rules', dfs)
+
+    # Retrieve the updated state from the ruleset
+    state = get_host().get_state('comparison_rules', session_id)
+
+    # Assert that the result is set correctly in the state
+    assert state.get('result') == False

@@ -43,11 +43,11 @@ with ruleset('comparison_rules'):
 
         if source.equals(target):
             print(f"Rows match between both source and target")
-            c.m.result = True
+            c.s.result = True
         else:
             print(f"Rows do not match between both source and target")
-            c.m.result = False
-        c.s.update
+            c.s.result = False
+        c.update
 
     # Define a rule for checking if a dataframe has any null values
     @when_all(m.rule == 'not_null')
@@ -64,7 +64,8 @@ with ruleset('comparison_rules'):
         target = pd.DataFrame(c.m.target)
         if target.notnull().all().all():
             print(f"No Nulls")
-            return True
+            c.s.result = True
         else:
             print(f"Empty Values")
-            return False
+            c.s.result = False
+        c.update
