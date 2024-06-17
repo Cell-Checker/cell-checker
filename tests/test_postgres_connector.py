@@ -4,6 +4,11 @@ from libs.postgres_connector import PostgresConnector
 
 @pytest.fixture
 def mock_postgres_connector():
+    """
+    Pytest fixture for creating a mock PostgresConnector.
+
+    This fixture creates a PostgresConnector with test parameters and returns it for use in other test cases.
+    """
     connector = PostgresConnector(
         username="test_user",
         password="test_pass",
@@ -15,6 +20,15 @@ def mock_postgres_connector():
     return connector
 
 # def test_postgres_connector_close(mock_postgres_connector):
+#     """
+#     Test case for PostgresConnector's close method.
+#
+#     This test case is currently commented out. When uncommented, it checks if the close method correctly sets the connection attribute to None.
+#
+#     The PostgresConnector is initialized with a mock connection and the connect method is called.
+#
+#     The close method is then called and the connection attribute is verified to be None.
+#     """
 #     # Mock the connection and ensure it's set
 #     mock_connection = MagicMock()
 #     mock_postgres_connector.connection = mock_connection
