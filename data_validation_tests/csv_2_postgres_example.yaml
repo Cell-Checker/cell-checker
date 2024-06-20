@@ -11,7 +11,7 @@ test:
       host: localhost
       port: 5432
       dbname: sidekick
-    query: "select * from projects;"
+      query: "select * from projects;"
   comparison_rules:
     - equal_row_count
     - rows_match

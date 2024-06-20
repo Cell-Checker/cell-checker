@@ -33,22 +33,32 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
             # Convert the dataframes to dictionaries for comparison
             source_data = source_df.to_dict(orient='records')
             target_data = target_df.to_dict(orient='records')
-            print(target_data)
-            summary_rows = {}
+            summary_rows = []
 
             # Post the comparison rules and data to the ruleset for evaluation
             for comparison_rule in test_case['test']['comparison_rules']:
                 session_id = f"{comparison_rule}_{test_case['test']['name']}"
                 post('comparison_rules', dict(rule=comparison_rule, source=source_data, target=target_data, sid=session_id))
                 state = get_host().get_state('comparison_rules', session_id)
-                print(state['result'])
                 if session_id == f"not_null_{test_case['test']['name']}":
-                    summary_rows.update(({comparison_rule: f"{state['target_size']}"}))
+                    summary_rows.append(
+                        (
+                            {"rule": comparison_rule,
+                             "status": state['result'],
+                             "rows": f"{state['target_size']}"}
+                        )
+                    )
                 else:
-                    summary_rows.update(({comparison_rule: f"{state['source_size']}/{state['target_size']}"}))
+                    summary_rows.append(
+                        (
+                            {"rule": comparison_rule,
+                             "status": state['result'],
+                             "rows": f"{state['source_size']}/{state['target_size']}"
+                             }
+                        )
+                    )
             context = {
                 'title': test_case['test']['name'],
-                'rules': test_case['test']['comparison_rules'],
                 'summary_rows': summary_rows
             }
 
@@ -58,8 +68,6 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
             # Output the rendered HTML (for example, save to a file or print to console)
             with open('test_results.html', 'w') as f:
                 print(rendered_html, file=f)
-            print("Open test_results.html")
-
         else:
             # Print an error message if the required keys are missing
             print(f"Test Case Is Missing The Following Information: {missing_keys}")

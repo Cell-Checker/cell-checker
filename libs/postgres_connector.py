@@ -37,7 +37,6 @@ class PostgresConnector(DataConnector):
         query (str): The SQL query to execute on the PostgreSQL database.
         """
         self.connection_string = f'postgresql+psycopg2://{username}:{password}@{host}:{port}/{dbname}'
-        print(self.connection_string)
         self.engine = create_engine(self.connection_string)
         self.connection = None
         self.query = query

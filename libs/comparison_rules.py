@@ -52,7 +52,9 @@ with ruleset('comparison_rules'):
             c.s.result = True
         else:
             print(f"Rows do not match between both source and target")
-            c.s.source_size = len(source)
+            all = pd.concat([source, target])
+            unique = all.drop_duplicates(subset=None, keep=False)
+            c.s.source_size = abs(int(len(source) - len(unique)/2))
             c.s.target_size = len(target)
             c.s.result = False
         c.update
@@ -76,6 +78,6 @@ with ruleset('comparison_rules'):
             c.s.result = True
         else:
             print(f"Empty Values")
-            c.s.target_size = len(target)
+            c.s.target_size = len(target[target.isnull().any(axis=1)])
             c.s.result = False
         c.update

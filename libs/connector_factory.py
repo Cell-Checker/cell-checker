@@ -30,7 +30,6 @@ class ConnectorFactory:
         Raises:
         ValueError: If the 'type' key in the configuration is not 'csv' or 'postgres'.
         """
-        print(config)
         connector_type = config['type']
 
         if connector_type == 'csv':

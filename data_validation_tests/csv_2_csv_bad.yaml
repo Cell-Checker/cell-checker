@@ -1,0 +1,12 @@
+test:
+  name: "Simple Test"
+  source:
+    type: "csv"
+    location: "./data_validation_tests/source.csv"
+  target:
+    type: "csv"
+    location: "./data_validation_tests/nan_target.csv"
+  comparison_rules:
+    - equal_row_count
+    - rows_match
+    - not_null
