@@ -30,9 +30,6 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         if result:
             # Process the data if the required keys are present
             source_df, target_df = process_data(test_case)
-
-            target_df = target_df.replace(np.nan, 'NaN')
-
             # Convert the dataframes to dictionaries for comparison
             source_data = source_df.to_dict(orient='records')
             target_data = target_df.to_dict(orient='records')
