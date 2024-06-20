@@ -20,9 +20,13 @@ with ruleset('comparison_rules'):
 
         if len(source) != len(target):
             print(f"Validation failed: Row count does not match (source: {len(source)}, target: {len(target)})")
+            c.s.source_size = len(source)
+            c.s.target_size = len(target)
             c.s.result = False
         else:
             print(f"Validation succeeded: Row count matches (source: {len(source)}, target: {len(target)})")
+            c.s.source_size = len(source)
+            c.s.target_size = len(target)
             c.s.result = True
         c.update(c.s)
 
@@ -43,9 +47,13 @@ with ruleset('comparison_rules'):
 
         if source.equals(target):
             print(f"Rows match between both source and target")
+            c.s.source_size = len(source)
+            c.s.target_size = len(target)
             c.s.result = True
         else:
             print(f"Rows do not match between both source and target")
+            c.s.source_size = len(source)
+            c.s.target_size = len(target)
             c.s.result = False
         c.update
 
@@ -64,8 +72,10 @@ with ruleset('comparison_rules'):
         target = pd.DataFrame(c.m.target)
         if target.notnull().all().all():
             print(f"No Nulls")
+            c.s.target_size = len(target)
             c.s.result = True
         else:
             print(f"Empty Values")
+            c.s.target_size = len(target)
             c.s.result = False
         c.update

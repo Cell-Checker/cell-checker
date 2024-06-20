@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Metro UI -->
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
+  </head>
+  <body>
+  <div class="container">
+      <ul data-role="tabs" data-expand="sm">
+          <li><a href="#_target_1">Summary</a></li>
+            % for index, rule in enumerate(rules, start=2):
+            <li><a href="#_target_${index}">Rule: ${rule.replace("_", " ").title()}</a></li>
+            % endfor
+      </ul>
+      <div class="border bd-default no-border-top p-2">
+          <div id="_target_1">
+              <h1>Test Name: ${title}</h1>
+              <hr>
+              <h2>Rules</h2>
+              % for key, value in summary_rows.items():
+              <button class="button">
+                  <span class="ml-1">${key.replace("_", " ").title()}</span>
+                  <span class="badge inline bg-green fg-white">${value}</span>
+              </button>
+              % endfor
+          </div>
+          % for index, rule in enumerate(rules, start=2):
+          <div id="_target_${index}">
+              <table class="table striped table-border mt-4"
+                     data-role="table"
+                     data-rows="5"
+                     data-rows-steps="5, 10"
+                     data-show-activity="false"
+                     data-source="./data.json"
+                     data-rownum="true"
+                     data-check-style="2"
+              >
+              </table>
+          </div>
+          % endfor
+      </div>
+  </div>
+
+    <!-- Metro UI -->
+  <script src="https://cdn.metroui.org.ua/current/metro.js"></script>
+  </body>
+</html>

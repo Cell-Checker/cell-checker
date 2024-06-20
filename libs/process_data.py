@@ -1,3 +1,4 @@
+import numpy as np
 from libs.connector_factory import ConnectorFactory
 from libs.data_service import *
 
