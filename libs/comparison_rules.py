@@ -71,6 +71,7 @@ with ruleset('comparison_rules'):
         Parameters:
         c (Context): The context object, which contains the target dataframe.
         """
+        source = pd.DataFrame(c.m.source)
         target = pd.DataFrame(c.m.target)
         if target.notnull().all().all():
             print(f"No Nulls")
@@ -78,6 +79,6 @@ with ruleset('comparison_rules'):
             c.s.result = True
         else:
             print(f"Empty Values")
-            c.s.target_size = len(target[target.isnull().any(axis=1)])
+            c.s.target_size = (len(source) - len(target[target.isnull().any(axis=1)]))
             c.s.result = False
         c.update

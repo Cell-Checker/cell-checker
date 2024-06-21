@@ -1,5 +1,5 @@
 test:
-  name: "Simple Test"
+  name: "CSV Target W/ Unexpected Nulls"
   source:
     type: "csv"
     location: "./data_validation_tests/source.csv"

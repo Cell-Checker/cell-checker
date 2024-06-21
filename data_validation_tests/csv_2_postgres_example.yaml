@@ -1,5 +1,5 @@
 test:
-  name: "Simple Test"
+  name: "CSV To Postgres Mismatch"
   source:
     type: "csv"
     location: "./data_validation_tests/projects.csv"
