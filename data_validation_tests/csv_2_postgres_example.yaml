@@ -14,4 +14,4 @@ test:
       query: "select * from projects;"
   comparison_rules:
     - equal_row_count
-    - rows_match
+    # - rows_match

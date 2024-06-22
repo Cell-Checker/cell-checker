@@ -1,5 +1,6 @@
 from durable.lang import ruleset, when_all, m, post, get_host
 import pandas as pd
+from libs.metroui_table import *
 
 # Define a ruleset for comparison rules
 with ruleset('comparison_rules'):
@@ -20,11 +21,15 @@ with ruleset('comparison_rules'):
 
         if len(source) != len(target):
             print(f"Validation failed: Row count does not match (source: {len(source)}, target: {len(target)})")
+            df = pd.merge(target, source, how='outer', suffixes=('', '_y'), indicator=True)
+            target_delta = df[df['_merge'] == 'left_only'][target.columns]
+            metroui_table(target_delta)
             c.s.source_size = len(source)
             c.s.target_size = len(target)
             c.s.result = False
         else:
             print(f"Validation succeeded: Row count matches (source: {len(source)}, target: {len(target)})")
+            print(pd.concat([source, target]))
             c.s.source_size = len(source)
             c.s.target_size = len(target)
             c.s.result = True
@@ -54,6 +59,8 @@ with ruleset('comparison_rules'):
             print(f"Rows do not match between both source and target")
             all = pd.concat([source, target])
             unique = all.drop_duplicates(subset=None, keep=False)
+            print("-----------")
+            print(unique)
             c.s.source_size = abs(int(len(source) - len(unique)/2))
             c.s.target_size = len(target)
             c.s.result = False

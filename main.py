@@ -57,6 +57,8 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
                              }
                         )
                     )
+
+            # Context information to be sent to the html template
             context = {
                 'title': test_case['test']['name'],
                 'summary_rows': summary_rows
