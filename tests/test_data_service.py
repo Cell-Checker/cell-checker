@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 from libs.data_service import DataService
 from libs.data_connector import DataConnector
