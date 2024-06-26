@@ -4,14 +4,16 @@ from libs.check_keys import *
 from libs.process_data import *
 from pathlib import Path
 from typing_extensions import Annotated
+from libs.comparison_rules import *
+from durable.lang import post, get_host
 
 def main(config: Annotated[Path, typer.Option(help="Path to test config file")]):
     """
-    Main function to
+    Main function to:
     1. Check if a YAML test file contains the required keys.
-    2. Extract the source and target data and load into a dataframe
-    3. Compare the two dataframes based on rules ( To Do )
-    4. Generate a report ( To Do )
+    2. Extract the source and target data and load them into dataframes.
+    3. Compare the two dataframes based on rules (To Do).
+    4. Generate a report (To Do).
 
     Parameters:
     config (Path): Path to the test YAML file.
@@ -28,12 +30,19 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         if result:
             # Process the data if the required keys are present
             source_df, target_df = process_data(test_case)
-            print(source_df)
-            print(target_df)
+
+            # Convert the dataframes to dictionaries for comparison
+            source_data = source_df.to_dict(orient='records')
+            target_data = target_df.to_dict(orient='records')
+
+            # Post the comparison rules and data to the ruleset for evaluation
+            for comparison_rule in test_case['test']['comparison_rules']:
+                session_id = f"{comparison_rule}_{test_case['test']['name']}"
+                post('comparison_rules', dict(rule=comparison_rule, source=source_data, target=target_data, sid=session_id))
+                state = get_host().get_state('comparison_rules', session_id)
         else:
             # Print an error message if the required keys are missing
             print(f"Test Case Is Missing The Following Information: {missing_keys}")
-
 
 if __name__ == "__main__":
     # Run the main function using Typer for command-line argument parsing
