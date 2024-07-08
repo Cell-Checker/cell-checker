@@ -1,5 +1,5 @@
 from libs.connector_factory import ConnectorFactory
-from libs.data_service import *
+from libs.data_service import DataService
 
 def process_data(test_case):
     """

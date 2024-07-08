@@ -1,5 +1,4 @@
 import pytest
-from unittest.mock import MagicMock, patch
 from libs.postgres_connector import PostgresConnector
 
 @pytest.fixture

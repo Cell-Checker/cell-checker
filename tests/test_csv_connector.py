@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 from libs.csv_connector import CSVConnector
 
