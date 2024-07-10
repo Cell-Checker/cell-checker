@@ -44,6 +44,7 @@ By working together, we aim to create a robust framework that not only enhances 
 * Python
 * Typer
 * Pandas
+* Durable Rules
 
 
 ## Getting Started
@@ -68,20 +69,37 @@ By working together, we aim to create a robust framework that not only enhances 
 2. Execute the test, ```python main.py --config test.yaml```
 3. Review the results (Coming Soon)
 
+## Comparison Rules
+
+Cell Checker uses a rules engine, durable_rules, to perform comparisons between the two dataframes.
+Out of the box, the framework uses the following rules:
+
+- equal_row_count: Determines if the source and target data has the same number of rows
+- rows_match: Determines if the source and target data have the exact same data by column/row
+- not_null: Determines if the target data has no null values
+
 ## Roadmap
 
 - [ ] Add logging
 - [ ] Add unit tests for modules in libs folder
 - [ ] Add HTML Reporting
 - [ ] Add Allure reporting capabilities
-- [ ] Add "components" document to easily copy & paste sections of the readme
+- [ ] Document how to make custom rules
+- [ ] Develop Preprocessors to assist in data comparison rules
+  - [ ] drop columns in source / target dataframes
+  - [ ] rename columns in source / target dataframes
+  - [ ] Custom Preprocessors
 - [ ] Create additional Connectors
-    - [ ] Excel
-    - [ ] Oracle
-    - [ ] MySql
-    - [ ] SQLSERVER
-    - [ ] Snowflake
-    - [ ] API/JSON 
+  - [ ] Excel
+  - [ ] Oracle [#4](https://github.com/Cell-Checker/cell-checker/issues/4)
+  - [ ] MySql
+  - [ ] SQLSERVER
+  - [ ] Snowflake
+  - [ ] API/JSON 
+  - [ ] MongoDB [#5](https://github.com/Cell-Checker/cell-checker/issues/5)
+- [ ] Create Content Pages
+  - [ ] Wiki Pages
+  - [ ] Github Pages
 
 See the [open issues](https://github.com/Cell-Checker/cell-checker/issues) for a full list of proposed features (and known issues).
 

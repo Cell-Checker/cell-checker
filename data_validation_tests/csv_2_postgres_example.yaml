@@ -13,5 +13,5 @@ test:
       dbname: sidekick
     query: "select * from projects;"
   comparison_rules:
-    row_count: "equal"
-    exact_match: "exact"
+    - equal_row_count
+    - rows_match
