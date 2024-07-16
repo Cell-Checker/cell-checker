@@ -3,21 +3,21 @@ test:
   source:
     type: "oracle"
     connection:
-      username: "apps_readonly"
-      password: "apps_readonly"
-      host: "norlecodb01.ecoatm.com"
+      username: apps_readonly
+      password: apps_readonly
+      host: norlecodb01.ecoatm.com
       port: 1525
-      sid: "TSRII"
-    query: "select * from XXGZ.XXECO_LK2_ORDER_CANCELS where week_name = 'WK5-2021'"
+      sid: TSRII
+      query: "select * from XXGZ.XXECO_LK2_ORDER_CANCELS where week_name = 'WK5-2021';"
   target:
     type: "oracle"
     connection:
-      username: "apps_readonly"
-      password: "apps_readonly"
-      host: "norlecodb01.ecoatm.com"
+      username: apps_readonly
+      password: apps_readonly
+      host: norlecodb01.ecoatm.com
       port: 1525
-      sid: "TSRII"
-    query: "select * from XXGZ.XXECO_LK2_ORDER_CANCELS where week_name = 'WK5-2021'"
+      sid: TSRII
+      query: "select * from XXGZ.XXECO_LK2_ORDER_CANCELS where week_name = 'WK5-2021'"
   comparison_rules:
     - equal_row_count
     - rows_match

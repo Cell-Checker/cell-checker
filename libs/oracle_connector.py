@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy import text
 import oracledb
+oracledb.init_oracle_client(lib_dir=r"C:\instantclient_21_14")
 
 
 import pandas as pd
@@ -43,7 +44,7 @@ class OracleConnector(DataConnector):
         dsn = f'{username}/{password}@{host}:{port}/{sid}'
         self.connection_string = oracledb.connect(dsn)
         print(self.connection_string)
-        self.engine = create_engine(self.connection)
+        self.engine = create_engine(self.connection_string)
         self.connection = None
         self.query = query
 
