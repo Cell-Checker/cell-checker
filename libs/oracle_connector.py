@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy import text
-import oracledb
+import oracledb as oracledb
 oracledb.init_oracle_client(lib_dir=r"C:\instantclient_21_14")
+
 
 
 import pandas as pd
@@ -41,8 +42,10 @@ class OracleConnector(DataConnector):
         """
         #self.connection_string = f'postgresql+psycopg2://{username}:{password}@{host}:{port}/{dbname}'
         #print(self.connection_string)
-        dsn = f'{username}/{password}@{host}:{port}/{sid}'
-        self.connection_string = oracledb.connect(dsn)
+        #dsn = sql.create_engine(
+            #f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}')
+        #dsn = f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}'
+        self.connection_string = f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}'
         print(self.connection_string)
         self.engine = create_engine(self.connection_string)
         self.connection = None
@@ -55,6 +58,8 @@ class OracleConnector(DataConnector):
         Prints a message indicating that the connection to the PostgreSQL database is being opened.
         """
         self.connection = self.engine.connect()
+        #self.engine = create_engine(dsn, echo=True)
+
 
     def fetch_data(self):
         """
