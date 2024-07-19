@@ -15,6 +15,8 @@ class ConnectorFactory:
     If the 'type' key is 'csv', the configuration should also contain a 'location' key that specifies the location of the CSV file.
 
     If the 'type' key is 'postgres', the configuration should also contain a 'connection' key that is a dictionary with the following keys: 'host', 'password', 'port', 'dbname', and 'query'.
+
+    If the 'type' key is 'oracle', the configuration should also contain a 'connection' key that is a dictionary with the following keys: 'host', 'password', 'port', 'sid', and 'query'.
     """
 
     @staticmethod
@@ -29,7 +31,7 @@ class ConnectorFactory:
         DataConnector: The created data connector.
 
         Raises:
-        ValueError: If the 'type' key in the configuration is not 'csv' or 'postgres'.
+        ValueError: If the 'type' key in the configuration is not 'csv', 'postgres' or 'oracle'.
         """
         print(config)
         connector_type = config['type']

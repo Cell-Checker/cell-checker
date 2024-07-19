@@ -15,36 +15,32 @@ class OracleConnector(DataConnector):
     This class is responsible for connecting to a OracleSQL database, fetching data from it, and closing the connection.
 
     Attributes:
-    connection_string (str): The connection string for the PostgreSQL database.
-    engine (Engine): The SQLAlchemy engine for the PostgreSQL database.
-    connection (Connection): The SQLAlchemy connection to the PostgreSQL database.
-    query (str): The SQL query to execute on the PostgreSQL database.
+    connection_string (str): The connection string for the OracleSQL database.
+    engine (Engine): The SQLAlchemy engine for the OracleSQL database.
+    connection (Connection): The SQLAlchemy connection to the OracleSQL database.
+    query (str): The SQL query to execute on the OracleSQL database.
 
     Methods:
-    connect(): Opens the connection to the PostgreSQL database.
-    fetch_data(): Executes the SQL query on the PostgreSQL database, fetches the result into a DataFrame, and returns it.
-    close(): Closes the connection to the PostgreSQL database.
+    connect(): Opens the connection to the OracleSQL database.
+    fetch_data(): Executes the SQL query on the OracleSQL database, fetches the result into a DataFrame, and returns it.
+    close(): Closes the connection to the OracleSQL database.
     """
 
     query: object
 
     def __init__(self, username, password, host, port, sid, query):
         """
-        Constructs all the necessary attributes for the PostgresConnector object.
+        Constructs all the necessary attributes for the OracleConnector object.
 
         Parameters:
-        username (str): The username for the PostgreSQL database.
-        password (str): The password for the PostgreSQL database.
-        host (str): The host of the PostgreSQL database.
-        port (str): The port of the PostgreSQL database.
-        dbname (str): The name of the PostgreSQL database.
-        query (str): The SQL query to execute on the PostgreSQL database.
+        username (str): The username for the OracleSQL database.
+        password (str): The password for the OracleSQL database.
+        host (str): The host of the OracleSQL database.
+        port (str): The port of the OracleSQL database.
+        sid (str): The sid of the OracleSQL database.
+        query (str): The SQL query to execute on the OracleSQL database.
         """
-        #self.connection_string = f'postgresql+psycopg2://{username}:{password}@{host}:{port}/{dbname}'
-        #print(self.connection_string)
-        #dsn = sql.create_engine(
-            #f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}')
-        #dsn = f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}'
+
         self.connection_string = f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}'
         print(self.connection_string)
         self.engine = create_engine(self.connection_string)
@@ -53,23 +49,22 @@ class OracleConnector(DataConnector):
 
     def connect(self):
         """
-        Opens the connection to the PostgreSQL database.
+        Opens the connection to the OracleSQL database.
 
-        Prints a message indicating that the connection to the PostgreSQL database is being opened.
+        Prints a message indicating that the connection to the OracleSQL database is being opened.
         """
         self.connection = self.engine.connect()
-        #self.engine = create_engine(dsn, echo=True)
 
 
     def fetch_data(self):
         """
-        Executes the SQL query on the PostgreSQL database, fetches the result into a DataFrame, and returns it.
+        Executes the SQL query on the OracleSQL database, fetches the result into a DataFrame, and returns it.
 
         Returns:
         DataFrame: The result of the SQL query.
 
         Raises:
-        Exception: If the connection to the PostgreSQL database is not open.
+        Exception: If the connection to the OracleSQL database is not open.
         """
         if not self.connection:
             raise Exception("Connection is not established. Call connect() method first.")
@@ -79,9 +74,9 @@ class OracleConnector(DataConnector):
 
     def close(self):
         """
-        Closes the connection to the PostgreSQL database.
+        Closes the connection to the OracleSQL database.
 
-        Prints a message indicating that the connection to the PostgreSQL database is being closed and sets the connection attribute to None.
+        Prints a message indicating that the connection to the OracleSQL database is being closed and sets the connection attribute to None.
         """
         if self.connection:
             self.connection.close()
