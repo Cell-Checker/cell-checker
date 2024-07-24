@@ -1,7 +1,6 @@
 from durable.lang import ruleset, when_all, m, post, get_host
 import pandas as pd
 
-
 # Define a ruleset for comparison rules
 with ruleset('comparison_rules'):
     # Define a rule for checking if the row count of two dataframes is equal
