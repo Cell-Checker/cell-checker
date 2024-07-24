@@ -34,18 +34,6 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
             # Convert the dataframes to dictionaries for comparison
             source_data = source_df.to_dict(orient='records')
             target_data = target_df.to_dict(orient='records')
-            pre_process = test_case['test']['preprocess']
-
-            # Performing preprocessing if available
-            sharepoint_file = pre_process.get("sharepoint_download")
-            if sharepoint_file:
-                session_id = f"sharepoint_download_{test_case['test']['name']}"
-                post('comparison_rules',
-                     dict(rule="sharepoint_download", file_path=sharepoint_file, sid=session_id))
-                state = get_host().get_state('comparison_rules', session_id)
-                if "exception" in state.keys():
-                    print(f"Error: {state}")
-                    raise Exception(f"Error: {state['exception']}")
 
             # Post the comparison rules and data to the ruleset for evaluation
             for comparison_rule in test_case['test']['comparison_rules']:
