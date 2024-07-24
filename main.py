@@ -5,7 +5,9 @@ from libs.process_data import *
 from pathlib import Path
 from typing_extensions import Annotated
 from libs.comparison_rules import *
+from libs.preprocessor import *
 from durable.lang import post, get_host
+
 
 def main(config: Annotated[Path, typer.Option(help="Path to test config file")]):
     """
@@ -28,24 +30,25 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         # Check if the required keys are present in the test case
         result, missing_keys = check_keys_in_list(test_case['test'], required_keys)
         if result:
+
+            # Performing preprocessing if available
+            pre_processor = test_case['test']['preprocessor']
+            sharepoint_file = pre_processor.get("sharepoint_download")
+            if sharepoint_file:
+                session_id = f"sharepoint_download_{test_case['test']['name']}"
+                post('preprocessor',
+                     dict(rule="sharepoint_download", file_path=sharepoint_file, sid=session_id))
+                state = get_host().get_state('preprocessor', session_id)
+                if "exception" in state:
+                    print(f"Error: {state}")
+                    raise Exception(f"Error: {state['exception']}")
+
             # Process the data if the required keys are present
             source_df, target_df = process_data(test_case)
 
             # Convert the dataframes to dictionaries for comparison
             source_data = source_df.to_dict(orient='records')
             target_data = target_df.to_dict(orient='records')
-            pre_process = test_case['test']['preprocess']
-
-            # Performing preprocessing if available
-            sharepoint_file = pre_process.get("sharepoint_download")
-            if sharepoint_file:
-                session_id = f"sharepoint_download_{test_case['test']['name']}"
-                post('comparison_rules',
-                     dict(rule="sharepoint_download", file_path=sharepoint_file, sid=session_id))
-                state = get_host().get_state('comparison_rules', session_id)
-                if "exception" in state.keys():
-                    print(f"Error: {state}")
-                    raise Exception(f"Error: {state['exception']}")
 
             # Post the comparison rules and data to the ruleset for evaluation
             for comparison_rule in test_case['test']['comparison_rules']:
@@ -55,6 +58,7 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         else:
             # Print an error message if the required keys are missing
             print(f"Test Case Is Missing The Following Information: {missing_keys}")
+
 
 if __name__ == "__main__":
     # Run the main function using Typer for command-line argument parsing
