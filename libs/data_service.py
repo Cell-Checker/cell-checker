@@ -1,4 +1,4 @@
-from libs.data_connector import *
+from libs.data_connector import DataConnector
 
 class DataService:
     """

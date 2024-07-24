@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 
 import pandas as pd
-from libs.data_connector import *
+from libs.data_connector import DataConnector
 
 class PostgresConnector(DataConnector):
     """

@@ -15,3 +15,4 @@ test:
   comparison_rules:
     - equal_row_count
     - rows_match
+
