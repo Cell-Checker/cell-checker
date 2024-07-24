@@ -1,5 +1,5 @@
 import pandas as pd
-from libs.data_connector import *
+from libs.data_connector import DataConnector
 
 class CSVConnector(DataConnector):
     """
