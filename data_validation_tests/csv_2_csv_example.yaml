@@ -10,3 +10,4 @@ test:
     - equal_row_count
     - rows_match
     - not_null
+

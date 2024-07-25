@@ -1,0 +1,23 @@
+test:
+  name: "db to db"
+  source:
+    type: "oracle"
+    connection:
+      username: 'insert username'
+      password: 'insert password'
+      host: insert host
+      port: insert port
+      sid: insert sid
+      query: "insert query"
+  target:
+    type: "oracle"
+    connection:
+      username: 'insert username'
+      password: 'insert password'
+      host: insert host
+      port: insert port
+      sid: insert sid
+      query: "insert query"
+  comparison_rules:
+    - equal_row_count
+    - rows_match

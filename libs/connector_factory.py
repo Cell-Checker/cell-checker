@@ -2,6 +2,7 @@
 
 from libs.csv_connector import CSVConnector
 from libs.postgres_connector import PostgresConnector
+from libs.oracle_connector import OracleConnector
 
 class ConnectorFactory:
     """
@@ -14,6 +15,9 @@ class ConnectorFactory:
     If the 'type' key is 'csv', the configuration should also contain a 'location' key that specifies the location of the CSV file.
 
     If the 'type' key is 'postgres', the configuration should also contain a 'connection' key that is a dictionary with the following keys: 'host', 'password', 'port', 'dbname', and 'query'.
+
+    If the 'type' key is 'oracle', the configuration should also contain a 'connection' key that is a dictionary with the following keys: 'host', 'password', 'port', 'sid', and 'query'.
+
     """
 
     @staticmethod
@@ -28,7 +32,8 @@ class ConnectorFactory:
         DataConnector: The created data connector.
 
         Raises:
-        ValueError: If the 'type' key in the configuration is not 'csv' or 'postgres'.
+        ValueError: If the 'type' key in the configuration is not 'csv', 'postgres' or 'oracle'.
+
         """
         print(config)
         connector_type = config['type']
@@ -42,5 +47,12 @@ class ConnectorFactory:
                                      config['connection']['port'],
                                      config['connection']['dbname'],
                                      config['connection']['query'])
+        elif connector_type == 'oracle':
+            return OracleConnector(config['connection']['username'],
+                                   config['connection']['password'],
+                                   config['connection']['host'],
+                                   config['connection']['port'],
+                                   config['connection']['sid'],
+                                   config['connection']['query'])
         else:
             raise ValueError(f"Unsupported connector type: {connector_type}")
