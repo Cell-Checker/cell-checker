@@ -29,7 +29,7 @@ with ruleset('preprocessor'):
 
             if not (file.startswith("https://") and file.__contains__("sites") and valid_format):
                 raise ValueError("File path is not correct. file path should be a valid sharepoint file path. "
-                                 "Example file path format: https://ecoatm.sharepoint.com/sites/<SiteName>/<FolderPath>/<FileName>")
+                                 "Example file path format: https://example.sharepoint.com/sites/<SiteName>/<FolderPath>/<FileName>")
             # Extract the file name, sharepoint site name, sharepoint site url, and folder url from the file path
             file_name = file.split("/")[-1]
             share_point_site_name = file.split("/sites/")[1].split("/")[0]

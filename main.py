@@ -30,18 +30,21 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         # Check if the required keys are present in the test case
         result, missing_keys = check_keys_in_list(test_case['test'], required_keys)
         if result:
-
             # Performing preprocessing if available
-            pre_processor = test_case['test']['preprocessor']
-            sharepoint_file = pre_processor.get("sharepoint_download")
-            if sharepoint_file:
-                session_id = f"sharepoint_download_{test_case['test']['name']}"
-                post('preprocessor',
-                     dict(rule="sharepoint_download", file_path=sharepoint_file, sid=session_id))
-                state = get_host().get_state('preprocessor', session_id)
-                if "exception" in state:
-                    print(f"Error: {state}")
-                    raise Exception(f"Error: {state['exception']}")
+            if 'preprocessor' in test_case['test']:
+                preprocessor = test_case['test'].get('preprocessor')
+                if preprocessor:
+                    for key, value in preprocessor.items():
+                        if key == "sharepoint_download":
+                            sharepoint_file = value
+                            if sharepoint_file:
+                                session_id = f"sharepoint_download_{test_case['test']['name']}"
+                                post('preprocessor',
+                                     dict(rule="sharepoint_download", file_path=sharepoint_file, sid=session_id))
+                                state = get_host().get_state('preprocessor', session_id)
+                                if "exception" in state:
+                                    print(f"Error: {state}")
+                                    raise Exception(f"Error: {state['exception']}")
 
             # Process the data if the required keys are present
             source_df, target_df = process_data(test_case)
