@@ -69,3 +69,4 @@ with ruleset('comparison_rules'):
             print(f"Empty Values")
             c.s.result = False
         c.update
+

@@ -5,7 +5,9 @@ from libs.process_data import *
 from pathlib import Path
 from typing_extensions import Annotated
 from libs.comparison_rules import *
+from libs.preprocessor import *
 from durable.lang import post, get_host
+
 
 def main(config: Annotated[Path, typer.Option(help="Path to test config file")]):
     """
@@ -28,6 +30,22 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         # Check if the required keys are present in the test case
         result, missing_keys = check_keys_in_list(test_case['test'], required_keys)
         if result:
+            # Performing preprocessing if available
+            if 'preprocessor' in test_case['test']:
+                preprocessor = test_case['test'].get('preprocessor')
+                if preprocessor:
+                    for key, value in preprocessor.items():
+                        if key == "sharepoint_download":
+                            sharepoint_file = value
+                            if sharepoint_file:
+                                session_id = f"sharepoint_download_{test_case['test']['name']}"
+                                post('preprocessor',
+                                     dict(rule="sharepoint_download", file_path=sharepoint_file, sid=session_id))
+                                state = get_host().get_state('preprocessor', session_id)
+                                if "exception" in state:
+                                    print(f"Error: {state}")
+                                    raise Exception(f"Error: {state['exception']}")
+
             # Process the data if the required keys are present
             source_df, target_df = process_data(test_case)
 
@@ -43,6 +61,7 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
         else:
             # Print an error message if the required keys are missing
             print(f"Test Case Is Missing The Following Information: {missing_keys}")
+
 
 if __name__ == "__main__":
     # Run the main function using Typer for command-line argument parsing
