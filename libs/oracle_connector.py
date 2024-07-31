@@ -4,9 +4,14 @@ import oracledb as oracledb
 oracledb.init_oracle_client(lib_dir=r"C:\instantclient_21_14")
 
 
-
 import pandas as pd
 from libs.data_connector import DataConnector
+import os
+from dotenv import load_dotenv
+
+# load environment variables from .env file
+load_dotenv(override=True)
+
 
 class OracleConnector(DataConnector):
     """
@@ -27,6 +32,13 @@ class OracleConnector(DataConnector):
     """
 
     query: object
+    # access environment variables
+    username = os.getenv('ORACLE_USERNAME')
+    password = os.getenv('ORACLE_PASSWORD')
+    host = os.getenv('ORACLE_HOST')
+    port = os.getenv('ORACLE_PORT')
+    sid = os.getenv('ORACLE_SID')
+    query = os.getenv('QUERY')
 
     def __init__(self, username, password, host, port, sid, query):
         """
@@ -41,11 +53,11 @@ class OracleConnector(DataConnector):
         query (str): The SQL query to execute on the OracleSQL database.
         """
 
-        self.connection_string = f'oracle+oracledb://{username}:{password}@{host}:{port}/{sid}'
+        self.connection_string = f'oracle+oracledb://{os.getenv("ORACLE_USERNAME")}:{os.getenv("ORACLE_PASSWORD")}@{os.getenv("ORACLE_HOST")}:{os.getenv("ORACLE_PORT")}/{os.getenv("ORACLE_SID")}'
         print(self.connection_string)
         self.engine = create_engine(self.connection_string)
         self.connection = None
-        self.query = query
+        self.query = os.getenv("QUERY")
 
     def connect(self):
         """
