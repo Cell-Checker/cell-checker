@@ -4,6 +4,7 @@ from libs.csv_connector import CSVConnector
 from libs.postgres_connector import PostgresConnector
 from libs.oracle_connector import OracleConnector
 from libs.mysql_connector import MySQLConnector
+from libs.snowflake_connector import SnowflakeConnector
 
 class ConnectorFactory:
     """

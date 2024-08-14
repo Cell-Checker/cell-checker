@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy import text
+import os
 import oracledb as oracledb
-oracledb.init_oracle_client(lib_dir=r"C:\instantclient_21_14")
 
-
+# if os.name == 'nt':
+#     oracledb.init_oracle_client(lib_dir=r"C:\instantclient_21_14")
 
 import pandas as pd
 from libs.data_connector import DataConnector
