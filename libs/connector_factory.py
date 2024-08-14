@@ -56,12 +56,5 @@ class ConnectorFactory:
                                    config['connection']['port'],
                                    config['connection']['sid'],
                                    config['connection']['query'])
-        elif connector_type == 'mysql':
-            return MySQLConnector(config['connection']['host'],
-                                  config['connection']['port'],
-                                  config['connection']['username'],
-                                  config['connection']['password'],
-                                  config['connection']['dbname'],
-                                  config['connection']['query'])
         else:
             raise ValueError(f"Unsupported connector type: {connector_type}")
