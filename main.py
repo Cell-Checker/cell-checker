@@ -1,7 +1,3 @@
-import os
-import time
-import urllib
-
 import yaml
 import typer
 from libs.check_keys import *
@@ -11,10 +7,6 @@ from typing_extensions import Annotated
 from libs.comparison_rules import *
 from libs.preprocessor import *
 from durable.lang import post, get_host
-from dotenv import load_dotenv
-
-# load environment variables from .env file
-load_dotenv(override=True)
 
 
 def main(config: Annotated[Path, typer.Option(help="Path to test config file")]):
@@ -35,23 +27,6 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
     if config:
         # Load the YAML file into a dictionary
         test_case = yaml.load(config.read_text(), Loader=yaml.Loader)
-
-        # Fetch the secrets from the environment and update the YAML configuration
-        def update_secrets_in_yaml(test_case):
-            for key, value in test_case.items():
-                if isinstance(value, dict):
-                    update_secrets_in_yaml(value)
-                elif isinstance(value, str) and (value.startswith("SOURCE_") or value.startswith("TARGET_")):
-                    if os.environ.get(value):
-                        if "PASSWORD" in value:
-                            password = os.environ.get(value)
-                            encoded_password = urllib.parse.quote_plus(password)
-                            test_case[key] = encoded_password
-                        else:
-                            test_case[key] = os.environ.get(value)
-            return test_case
-
-        test_case = update_secrets_in_yaml(test_case)
         # Check if the required keys are present in the test case
         result, missing_keys = check_keys_in_list(test_case['test'], required_keys)
         if result:

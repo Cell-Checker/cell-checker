@@ -4,30 +4,20 @@ test:
     type: "mysql"
     connection:
       host: "localhost"
-      port: "5432"
+      port: 3306
       dbname: "test"
-      query:  'SELECT * FROM public.test'
-
-      # use .env file to store the username & password. Please note that username value (SOURCE_MYSQL_USERNAME) &
-      # password value (SOURCE_MYSQL_PASSWORD) in this file should be used as keys in the .env file
-      # to store the actual username & password
-      username: "SOURCE_MYSQL_USERNAME"
-      password: "SOURCE_MYSQL_PASSWORD"
-
+      username: "root"
+      password: "password"
+      query: "SELECT * FROM test_table"
   target:
     type: "mysql"
     connection:
-      host: "localhost"
-      port: "5432"
-      dbname: "test"
-      query: 'SELECT * FROM public.test'
-
-      # use .env file to store the username & password. Please note that username value (SOURCE_MYSQL_USERNAME) &
-      # password value (SOURCE_MYSQL_PASSWORD) in this file should be used as keys in the .env file
-      # to store the actual username & password
-      username: "TARGET_MYSQL_USERNAME"
-      password: "TARGET_MYSQL_PASSWORD"
-
+        host: "localhost"
+        port: 3306
+        dbname: "test"
+        username: "root"
+        password: "password"
+        query: "SELECT * FROM test_table"
   comparison_rules:
     - equal_row_count
     - rows_match
