@@ -89,10 +89,10 @@ with ruleset('comparison_rules'):
         target = pd.DataFrame(c.m.target)
         results = (~source.isin(target).all(axis=1))
         if results.all():
-            print(f"Source Not In Target")
+            print(f"Source Row(s) Not Found In Target Data")
             c.s.result = True
         else:
-            print(f"Source In Target")
+            print(f"Source Row(s) Found In Target Data")
             c.s.result = False
         c.update()
 
@@ -115,9 +115,9 @@ with ruleset('comparison_rules'):
         target = pd.DataFrame(c.m.target)
         results = (~target.isin(source).all(axis=1))
         if results.all():
-            print(f"Target Not In Source")
+            print(f"Target Row(s) Not Found In Source Data")
             c.s.result = True
         else:
-            print(f"Target Is In Source")
+            print(f"Target Row(s) Not Found In Source Data")
             c.s.result = False
         c.update()
