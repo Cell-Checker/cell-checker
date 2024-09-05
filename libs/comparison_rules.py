@@ -70,3 +70,28 @@ with ruleset('comparison_rules'):
             c.s.result = False
         c.update
 
+    @when_all(m.rule == 'rows_not_in_target')
+    def not_in_target(c):
+        source = pd.DataFrame(c.m.source)
+        target = pd.DataFrame(c.m.target)
+        results = (~source.isin(target).all(axis=1))
+        if results.all():
+            print(f"Source Not In Target")
+            c.s.result = True
+        else:
+            print(f"Source In Target")
+            c.s.result = False
+        c.update
+
+    @when_all(m.rule == 'rows_not_in_source')
+    def not_in_source(c):
+        source = pd.DataFrame(c.m.source)
+        target = pd.DataFrame(c.m.target)
+        results = (~target.isin(source).all(axis=1))
+        if results.all():
+            print(f"Target Not In Source")
+            c.s.result = True
+        else:
+            print(f"Target Is In Source")
+            c.s.result = False
+        c.update
