@@ -70,3 +70,54 @@ with ruleset('comparison_rules'):
             c.s.result = False
         c.update
 
+    @when_all(m.rule == 'rows_not_in_target')
+    def not_in_target(c):
+        """
+        This function checks if all rows in the source dataframe are present in the target dataframe.
+
+        It first converts the source and target data into pandas DataFrames. Then, it checks if each row in the source dataframe is in the target dataframe.
+        If all rows in the source dataframe are in the target dataframe, it prints "Source In Target" and sets the result to False.
+        If there are any rows in the source dataframe that are not in the target dataframe, it prints "Source Not In Target" and sets the result to True.
+
+        Parameters:
+        c (Context): The context object, which contains the source and target dataframes.
+
+        Returns:
+        None. The result is stored in the context object.
+        """
+        source = pd.DataFrame(c.m.source)
+        target = pd.DataFrame(c.m.target)
+        results = (~source.isin(target).all(axis=1))
+        if results.all():
+            print(f"Source Row(s) Not Found In Target Data")
+            c.s.result = True
+        else:
+            print(f"Source Row(s) Found In Target Data")
+            c.s.result = False
+        c.update()
+
+    @when_all(m.rule == 'rows_not_in_source')
+    def not_in_source(c):
+        """
+        This function checks if all rows in the target dataframe are present in the source dataframe.
+
+        It first converts the source and target data into pandas DataFrames. Then, it checks if each row in the target dataframe is in the source dataframe.
+        If all rows in the target dataframe are in the source dataframe, it prints "Target Is In Source" and sets the result to False.
+        If there are any rows in the target dataframe that are not in the source dataframe, it prints "Target Not In Source" and sets the result to True.
+
+        Parameters:
+        c (Context): The context object, which contains the source and target dataframes.
+
+        Returns:
+        None. The result is stored in the context object.
+        """
+        source = pd.DataFrame(c.m.source)
+        target = pd.DataFrame(c.m.target)
+        results = (~target.isin(source).all(axis=1))
+        if results.all():
+            print(f"Target Row(s) Not Found In Source Data")
+            c.s.result = True
+        else:
+            print(f"Target Row(s) Not Found In Source Data")
+            c.s.result = False
+        c.update()
