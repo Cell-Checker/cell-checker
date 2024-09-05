@@ -4,6 +4,7 @@ from libs.csv_connector import CSVConnector
 from libs.postgres_connector import PostgresConnector
 from libs.oracle_connector import OracleConnector
 from libs.mysql_connector import MySQLConnector
+from libs.ssms_connector import SqlServerConnector
 
 class ConnectorFactory:
     """
@@ -62,5 +63,12 @@ class ConnectorFactory:
                                   config['connection']['password'],
                                   config['connection']['dbname'],
                                   config['connection']['query'])
+        elif connector_type == 'ssms':
+            return SqlServerConnector(config['connection']['DATABASE'],
+                                      config['connection']['HOST'],
+                                      config['connection']['USERNAME'],
+                                      config['connection']['PASSWORD'],
+                                      config['connection']['PORT'],
+                                      config['connection']['query'])
         else:
             raise ValueError(f"Unsupported connector type: {connector_type}")
