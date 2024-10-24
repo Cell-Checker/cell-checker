@@ -12,6 +12,8 @@ from libs.comparison_rules import *
 from libs.preprocessor import *
 from durable.lang import post, get_host
 from dotenv import load_dotenv
+from libs.utils import generate_excel_report
+from libs.constants import OUTPUT_FOLDER
 
 # load environment variables from .env file
 load_dotenv(override=True)
@@ -83,11 +85,19 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
                 session_id = f"{comparison_rule}_{test_case['test']['name']}"
                 post('comparison_rules', dict(rule=comparison_rule, source=source_data, target=target_data, sid=session_id))
                 state = get_host().get_state('comparison_rules', session_id)
+            if 'postprocessor' in test_case['test']:
+                postprocessor = test_case['test'].get('postprocessor')
+                primary_key = postprocessor.get('primary_key') if postprocessor else None
+                if primary_key:
+                    generate_excel_report(source_df, target_df, primary_key)
         else:
             # Print an error message if the required keys are missing
             print(f"Test Case Is Missing The Following Information: {missing_keys}")
 
 
 if __name__ == "__main__":
+    # create outputs directory if not present
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.mkdir(OUTPUT_FOLDER)
     # Run the main function using Typer for command-line argument parsing
     typer.run(main)
