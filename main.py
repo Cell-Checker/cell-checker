@@ -78,6 +78,7 @@ def main(config: Annotated[Path, typer.Option(help="Path to test config file")])
             source_data = source_df.to_dict(orient='records')
             target_data = target_df.to_dict(orient='records')
 
+
             # Post the comparison rules and data to the ruleset for evaluation
             for comparison_rule in test_case['test']['comparison_rules']:
                 session_id = f"{comparison_rule}_{test_case['test']['name']}"
