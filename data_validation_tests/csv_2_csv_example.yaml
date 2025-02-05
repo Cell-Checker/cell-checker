@@ -11,5 +11,5 @@ test:
     - rows_match
     - not_null
   postprocessor:
-    primary_key: "id"
+    primary_key: "ecoid"
 

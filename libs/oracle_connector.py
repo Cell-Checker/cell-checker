@@ -4,7 +4,7 @@ import os
 import oracledb as oracledb
 
 if os.name == 'nt':
-    oracledb.init_oracle_client(lib_dir=r"C:\instantclient_21_14")
+    oracledb.init_oracle_client(lib_dir=r"C:\instantclient_23_6")
 
 
 
@@ -72,7 +72,7 @@ class OracleConnector(DataConnector):
         if not self.connection:
             raise Exception("Connection is not established. Call connect() method first.")
         result = self.connection.execute(text(self.query))
-        df = pd.DataFrame(result.fetchall(), columns=result.keys())
+        df = pd.DataFrame(result.fetchall(), columns=result.keys(), dtype=str)
         return df
 
     def close(self):
