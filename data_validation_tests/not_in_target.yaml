@@ -1,0 +1,10 @@
+test:
+  name: "Not In Target Test"
+  source:
+    type: "csv"
+    location: "./data_validation_tests/source.csv"
+  target:
+    type: "csv"
+    location: "./data_validation_tests/not_in_target.csv"
+  comparison_rules:
+    - rows_not_in_target

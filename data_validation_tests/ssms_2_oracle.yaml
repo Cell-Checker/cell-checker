@@ -1,0 +1,24 @@
+test:
+  name: "db to db"
+  source:
+    type: "ssms"
+    connection:
+      SERVER: 'SOURCE_SSMS_SERVER'
+      DATABASE: 'SOURCE_SSMS_DATABASE'
+      USERNAME: 'SOURCE_SSMS_USERNAME'
+      PASSWORD: 'SOURCE_SSMS_PASSWORD'
+      HOST: 'SOURCE_SSMS_HOST'
+      PORT: 'SOURCE_SSMS_PORT'
+      query: 'SOURCE_SSMS_QUERY'
+  target:
+    type: "oracle"
+    connection:
+      username: 'TARGET_ORACLE_USERNAME'
+      password: 'TARGET_ORACLE_PASSWORD'
+      host: 'TARGET_ORACLE_HOST'
+      port: 'TARGET_ORACLE_PORT'
+      sid: 'TARGET_ORACLE_SID'
+      query: 'TARGET_ORACLE_QUERY'
+  comparison_rules:
+    - equal_row_count
+    - rows_match
