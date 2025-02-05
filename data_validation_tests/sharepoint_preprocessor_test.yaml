@@ -1,0 +1,14 @@
+test:
+  name: "Sharepoint preprocessor test"
+  preprocessor:
+    sharepoint_download: "https://ecoatm.sharepoint.com/:x:/r/sites/DataEngineeringTest/Shared%20Documents/test.csv?d=wb5446d7e69ba43ebbd8a78964763feb8&csf=1&web=1&e=iMNz04"
+  source:
+    type: "csv"
+    location: "./data_validation_tests/source.csv"
+  target:
+    type: "csv"
+    location: "./data_validation_tests/target.csv"
+  comparison_rules:
+    - equal_row_count
+    - rows_match
+    - not_null
