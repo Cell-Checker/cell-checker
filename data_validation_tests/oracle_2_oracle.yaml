@@ -1,0 +1,23 @@
+test:
+  name: "db to db"
+  source:
+    type: "oracle"
+    connection:
+      username: 'SOURCE_ORACLE_USERNAME'
+      password: 'SOURCE_ORACLE_PASSWORD'
+      host: 'SOURCE_ORACLE_HOST'
+      port: 'SOURCE_ORACLE_PORT'
+      sid: 'SOURCE_ORACLE_SID'
+      query: 'SOURCE_ORACLE_QUERY'
+  target:
+    type: "oracle"
+    connection:
+      username: 'TARGET_ORACLE_USERNAME'
+      password: 'TARGET_ORACLE_PASSWORD'
+      host: 'TARGET_ORACLE_HOST'
+      port: 'TARGET_ORACLE_PORT'
+      sid: 'TARGET_ORACLE_SID'
+      query: 'TARGET_ORACLE_QUERY'
+  comparison_rules:
+    - equal_row_count
+    - rows_match
